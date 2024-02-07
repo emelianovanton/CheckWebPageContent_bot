@@ -36,16 +36,29 @@ def check(context: CallbackContext) -> None:
 
 def manual_check(context: CallbackContext) -> None:
     context.bot.send_message(channel_id, f'Checking...')
-    run_check()
+    global previous_content
+    try:
+        response = requests.get(url_to_check)
+        soup = BeautifulSoup(response.text, 'html.parser')
+        current_content = str(soup)
+
+        if current_content != previous_content:
+            context.bot.send_message(channel_id, f'\U0001F6A8\U0001F6A8\U0001F6A8  \n'
+                                                 f'Web page content changed!\n '
+                                                 f'{url_to_check}')
+            previous_content = current_content
+
+    except Exception as e:
+        context.bot.send_message(channel_id, f'Error: {str(e)}')
     context.bot.send_message(channel_id, f'Check completed.')
 
 
 def run_manual_check(update: Update, context: CallbackContext) -> None:
-    manual_check(context)
+    manual_check()
 
 
 def run_check(update: Update, context: CallbackContext) -> None:
-    check(context)
+    check()
 
 
 def main() -> None:
