@@ -19,7 +19,6 @@ def start(update: Update, context: CallbackContext) -> None:
 
 def check(context: CallbackContext) -> None:
     global previous_content
-    context.bot.send_message(channel_id, f'Checking...')
     try:
         response = requests.get(url_to_check)
         soup = BeautifulSoup(response.text, 'html.parser')
@@ -34,6 +33,16 @@ def check(context: CallbackContext) -> None:
     except Exception as e:
         context.bot.send_message(channel_id, f'Error: {str(e)}')
     context.bot.send_message(channel_id, f'Check completed.')
+
+
+def manual_check(context: CallbackContext) -> None:
+    context.bot.send_message(channel_id, f'Checking...')
+    check()
+    context.bot.send_message(channel_id, f'Check completed.')
+
+
+def run_manual_check(update: Update, context: CallbackContext) -> None:
+    manual_check(context)
 
 
 def run_check(update: Update, context: CallbackContext) -> None:
