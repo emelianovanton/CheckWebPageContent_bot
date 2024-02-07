@@ -55,11 +55,11 @@ def manual_check(context: CallbackContext) -> None:
 
 # Added manual check
 def run_manual_check(update: Update, context: CallbackContext) -> None:
-    manual_check()
+    manual_check(context)
 
 
 def run_check(update: Update, context: CallbackContext) -> None:
-    check()
+    check(context)
 
 
 def main() -> None:
