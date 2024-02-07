@@ -19,7 +19,7 @@ def start(update: Update, context: CallbackContext) -> None:
 
 def check(context: CallbackContext) -> None:
     global previous_content
-
+    context.bot.send_message(channel_id, f'Checking...')
     try:
         response = requests.get(url_to_check)
         soup = BeautifulSoup(response.text, 'html.parser')
