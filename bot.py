@@ -14,7 +14,7 @@ previous_content = ''
 def start(update: Update, context: CallbackContext) -> None:
     chat_id = update.message.chat_id
     context.bot.send_message(chat_id,
-                             'Bot is running. Use /check to get the web page content or /runcheck to manually check.')
+                             'Bot is running. Use /runcheck to manually check.')
 
 
 def check(context: CallbackContext) -> None:
@@ -48,7 +48,7 @@ def main() -> None:
     updater.dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, run_check))
 
     # Schedule the check job every 5 minutes
-    job_queue.run_repeating(check, interval=300, first=0)
+    job_queue.run_repeating(check, interval=update_frequency, first=30)
 
     updater.start_polling()
 
