@@ -36,7 +36,7 @@ def check(context: CallbackContext) -> None:
 
 def manual_check(context: CallbackContext) -> None:
     context.bot.send_message(channel_id, f'Checking...')
-    check()
+    run_check()
     context.bot.send_message(channel_id, f'Check completed.')
 
 
