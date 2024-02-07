@@ -32,7 +32,6 @@ def check(context: CallbackContext) -> None:
 
     except Exception as e:
         context.bot.send_message(channel_id, f'Error: {str(e)}')
-    context.bot.send_message(channel_id, f'Check completed.')
 
 
 def manual_check(context: CallbackContext) -> None:
@@ -54,7 +53,7 @@ def main() -> None:
     job_queue = updater.job_queue
 
     updater.dispatcher.add_handler(CommandHandler("start", start))
-    updater.dispatcher.add_handler(CommandHandler("runcheck", run_check))
+    updater.dispatcher.add_handler(CommandHandler("runcheck", run_manual_check))
 
     # Schedule the check job every 5 minutes
     job_queue.run_repeating(check, interval=update_frequency, first=30)
