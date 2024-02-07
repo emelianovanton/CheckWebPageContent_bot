@@ -30,11 +30,6 @@ def check(context: CallbackContext) -> None:
                                                  f'Web page content changed!\n '
                                                  f'{url_to_check}')
             previous_content = current_content
-        else:
-            context.bot.send_message(channel_id,
-                                     f'\U0001F4A4\U0001F4A4\U0001F4A4 \n'
-                                     f'Web page content remains the same.\n'
-                                     f'{url_to_check}')
 
     except Exception as e:
         context.bot.send_message(channel_id, f'Error: {str(e)}')
