@@ -6,12 +6,14 @@ import os
 
 url_to_check = os.environ.get('WEBPAGE_URL')
 bot_token = os.environ.get('BOT_TOKEN')
-chat_id = os.environ.get('CHAT_ID')
 previous_content = ''
+user_ids = set()
 
 
 def start(update: Update, context: CallbackContext) -> None:
-    update.message.reply_text('Bot is running. Use /check to get the web page content.')
+    user_id = update.message.chat_id
+    user_ids.add(user_id)
+    update.message.reply_text('Bot is running. Use /check to get the web page content or /runcheck to manually check.')
 
 
 def check(context: CallbackContext) -> None:
@@ -23,13 +25,20 @@ def check(context: CallbackContext) -> None:
         current_content = str(soup)
 
         if current_content != previous_content:
-            context.bot.send_message(chat_id, 'Web page content changed!\n\n' + current_content)
+            for user_id in user_ids:
+                context.bot.send_message(user_id, 'Web page content changed!\n\n' + current_content)
             previous_content = current_content
         else:
-            context.bot.send_message(chat_id, 'Web page content remains the same.')
+            for user_id in user_ids:
+                context.bot.send_message(user_id, 'Web page content remains the same.')
 
     except Exception as e:
-        context.bot.send_message(chat_id, f'Error: {str(e)}')
+        for user_id in user_ids:
+            context.bot.send_message(user_id, f'Error: {str(e)}')
+
+
+def run_check(update: Update, context: CallbackContext) -> None:
+    check(context)
 
 
 def main() -> None:
@@ -37,8 +46,9 @@ def main() -> None:
     job_queue = updater.job_queue
 
     updater.dispatcher.add_handler(CommandHandler("start", start))
+    updater.dispatcher.add_handler(CommandHandler("runcheck", run_check))
 
-    # Schedule the check job every 5 minutes
+    # Schedule the check job every 2 minutes
     job_queue.run_repeating(check, interval=120, first=0)
 
     updater.start_polling()
