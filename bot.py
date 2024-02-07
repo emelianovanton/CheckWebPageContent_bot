@@ -8,7 +8,6 @@ url_to_check = os.environ.get('WEBPAGE_URL')
 bot_token = os.environ.get('BOT_TOKEN')
 channel_id = os.environ.get('CHANNEL_ID')
 previous_content = ''
-user_ids = set()
 
 
 def start(update: Update, context: CallbackContext) -> None:
@@ -26,10 +25,10 @@ def check(context: CallbackContext) -> None:
         current_content = str(soup)
 
         if current_content != previous_content:
-            context.bot.send_message(channel_id, 'Web page content changed!\n\n' + current_content)
+            context.bot.send_message(channel_id, f'{url_to_check}: Web page content changed!')
             previous_content = current_content
         else:
-            context.bot.send_message(channel_id, 'Web page content remains the same.')
+            context.bot.send_message(channel_id, f'{url_to_check}: Web page content remains the same.')
 
     except Exception as e:
         context.bot.send_message(channel_id, f'Error: {str(e)}')
