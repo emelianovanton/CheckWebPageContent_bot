@@ -46,7 +46,6 @@ def main() -> None:
 
     updater.dispatcher.add_handler(CommandHandler("start", start))
     updater.dispatcher.add_handler(CommandHandler("runcheck", run_check))
-    updater.dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, run_check))
 
     # Schedule the check job every 5 minutes
     job_queue.run_repeating(check, interval=update_frequency, first=30)
