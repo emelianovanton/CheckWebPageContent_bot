@@ -7,6 +7,7 @@ from telegram.ext import Updater, CommandHandler, CallbackContext, Job, MessageH
 url_to_check = os.environ.get('WEBPAGE_URL')
 bot_token = os.environ.get('BOT_TOKEN')
 channel_id = os.environ.get('CHANNEL_ID')
+update_frequency = int(os.environ.get('UPDATE_FREQ_SEC'))
 previous_content = ''
 
 
