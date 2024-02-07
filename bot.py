@@ -20,7 +20,7 @@ def check(context: CallbackContext) -> None:
     global previous_content
 
     try:
-        response = requests.get(url_to_check)
+        response = requests.get(str(url_to_check))
         soup = BeautifulSoup(response.text, 'html.parser')
         current_content = str(soup)
 
