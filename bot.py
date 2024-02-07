@@ -53,6 +53,7 @@ def manual_check(context: CallbackContext) -> None:
     context.bot.send_message(channel_id, f'Check completed.')
 
 
+# Added manual check
 def run_manual_check(update: Update, context: CallbackContext) -> None:
     manual_check()
 
