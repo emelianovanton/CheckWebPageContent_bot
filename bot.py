@@ -26,10 +26,10 @@ def check(context: CallbackContext) -> None:
         current_content = str(soup)
 
         if current_content != previous_content:
-            context.bot.send_message(channel_id, f'{url_to_check}: Web page content changed!')
+            context.bot.send_message(channel_id, f'Web page content changed! {url_to_check}')
             previous_content = current_content
         else:
-            context.bot.send_message(channel_id, f'{url_to_check}: Web page content remains the same.')
+            context.bot.send_message(channel_id, f'Web page content remains the same. {url_to_check}')
 
     except Exception as e:
         context.bot.send_message(channel_id, f'Error: {str(e)}')
